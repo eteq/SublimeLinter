@@ -129,15 +129,7 @@ class Linter(BaseLinter):
         except ValueError as e:
             return [PythonError(filename, 0, e.args[0])]
         else:
-            # Okay, it's syntactically valid.  Now check it.
-            if ignore is not None:
-                old_magic_globals = pyflakes._MAGIC_GLOBALS
-                pyflakes._MAGIC_GLOBALS += ignore
-
-            w = pyflakes.Checker(tree, filename)
-
-            if ignore is not None:
-                pyflakes._MAGIC_GLOBALS = old_magic_globals
+            w = pyflakes.Checker(tree, filename, ignore)
 
             return w.messages
 
